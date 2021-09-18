@@ -17,13 +17,18 @@ type AwsS3 struct {
 	bucketName string
 }
 
-func NewAwsS3(awsRegion, accessKey, secretKey, bucket string) *AwsS3 {
+func NewAwsS3(awsEndpoint, awsRegion, accessKey, secretKey, bucket string) *AwsS3 {
 	creds := credentials.NewStaticCredentials(accessKey, secretKey, "")
 	aws.NewConfig()
-	sess := session.Must(session.NewSession(&aws.Config{
+	config := &aws.Config{
 		Region:      aws.String(awsRegion),
 		Credentials: creds,
-	}))
+	}
+	if awsEndpoint != "" {
+		config.Endpoint = aws.String(awsEndpoint)
+		config.S3ForcePathStyle = aws.Bool(true)
+	}
+	sess := session.Must(session.NewSession(config))
 	return &AwsS3{
 		sess:       sess,
 		bucketName: bucket,

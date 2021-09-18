@@ -61,6 +61,18 @@ inputs:
       is_required: true
       is_sensitive: true
 
+  - cache_aws_endpoint:
+    opts:
+      title: AWS Endpoint
+      summary: Custom URL to override default AWS one.
+      description: |
+        Set a custom URL if your S3 bucket is not hosted on a AWS domain.
+
+        For instance, if you have a min.io server running on `https://your-domain.com`, it will use that endpoint instead.
+      category: AWS Access
+      is_expand: true
+      is_required: false
+
   - cache_aws_region:
     opts:
       title: AWS Region
