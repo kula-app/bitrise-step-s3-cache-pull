@@ -21,6 +21,7 @@ const (
 	CACHE_BUCKET_NAME           = "cache_bucket_name"
 	CACHE_RESTORE_KEYS          = "cache_restore_keys"
 	CACHE_PATH                  = "cache_path"
+	CACHE_ARCHIVE_EXTENSION     = "cache_archive_extension"
 )
 
 func parseRestoreKeysInput(keysString string) []string {
@@ -64,6 +65,7 @@ func main() {
 	bucketName := GetEnvOrExit(CACHE_BUCKET_NAME)
 	restoreKeys := GetEnvOrExit(CACHE_RESTORE_KEYS)
 	cachePath := GetEnvOrExit(CACHE_PATH)
+	archiveExtension := GetEnvOrExit(CACHE_ARCHIVE_EXTENSION)
 
 	CreateTempFolder(func(tempFolderPath string) {
 		s3 := NewAwsS3(
@@ -85,7 +87,7 @@ func main() {
 			cacheExists, cacheKey := s3.CacheExists(key)
 			if cacheExists {
 				log.Println("Cache found! Downloading...")
-				downloadedFilePath := fmt.Sprintf("%s/%s.zip", tempFolderPath, cacheKey)
+				downloadedFilePath := fmt.Sprintf("%s/%s.%s", tempFolderPath, cacheKey, archiveExtension)
 				size, err := s3.Download(cacheKey, downloadedFilePath)
 
 				if err != nil {

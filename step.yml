@@ -158,3 +158,27 @@ inputs:
       category: Cache
       is_expand: false
       is_required: true
+
+  - cache_archive_extension: "zip"
+    opts:
+      title: Archive Extension
+      summary: The extension of the archive
+      category: Archive
+      is_expand: true
+      is_required: true
+      value_options:
+      - zip
+      - tar
+      - tar.br
+      - tar.gz
+      - tar.bz2
+      - tar.xz
+      - tar.lz4
+      - tar.sz
+      - zst
+      - tar.zst
+      - bz2
+      - gz
+      - lz4
+      - sz
+      - xz
